@@ -1,8 +1,11 @@
 {
   "name": "chacha20-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ChaCha20 implementation in TypeScript, compatible with https://github.com/codahale/chacha20",
-  "main": "index.ts",
+  "main": "index.js",
+  "scripts": {
+    "prepack": "tsc index.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Xmader/chacha20-ts.git"
