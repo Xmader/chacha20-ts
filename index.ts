@@ -2,7 +2,10 @@
  * based on https://github.com/mpaland/mipher/blob/master/src/chacha20.ts
  * MIT License
  * 
- * Added: the number of quarter-rounds can be specified.
+ * Added: the number of rounds can be specified.
+ * 
+ * Note: The algorithm name is "ChaCha".  "ChaCha20" is a specific instance where 20 "rounds" are used.
+ * @see https://tools.ietf.org/html/rfc7539#section-1.1
  */
 
 type ROUNDS = 8 | 12 | 20
@@ -157,11 +160,18 @@ export class ChaCha20 {
     
     /**
      * compatible with [the go api](github.com/codahale/chacha20)
+     * @param {Uint8Array} key The secret key as Uint8Array (32 bytes)
+     * @param {Uint8Array} nonce The nonce (IV) as Uint8Array (8 bytes)
+     * @param {8 | 12 | 20} rounds The number of ChaCha rounds of 8, 12, or 20 can be specified.
      */
     static NewWithRounds(key: Uint8Array, nonce: Uint8Array, rounds: ROUNDS = 20) {
         const cipher = new ChaCha20()
         cipher.init(key, nonce)
         return {
+            /**
+             * @param {Uint8Array} dst 
+             * @param {Uint8Array} src 
+             */
             XORKeyStream(dst: Uint8Array, src: Uint8Array) {
                 cipher.stream(src, dst, src.length, rounds)
             }
